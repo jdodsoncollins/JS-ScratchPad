@@ -89,13 +89,48 @@ struct ContentView: View {
         
         var consoleOutput = ""
         
-        let consoleLog: @convention(block) (String) -> Void = { message in
+        let swiftConsoleLog: @convention(block) (String) -> Void = { message in
             consoleOutput += message + "\n"
         }
         
+        context.setObject(swiftConsoleLog, forKeyedSubscript: "_swiftConsoleLog" as NSString)
+        
         let consoleObject = JSValue(newObjectIn: context)
-        consoleObject?.setObject(consoleLog, forKeyedSubscript: "log" as NSString)
+        consoleObject?.setObject(swiftConsoleLog, forKeyedSubscript: "log" as NSString)
         context.globalObject.setValue(consoleObject, forProperty: "console")
+        
+        let consolePolyfill = #"""
+        function formatValue(val) {
+          // If array, recursively format each element
+          if (Array.isArray(val)) {
+            return "[" + val.map(function(elem) {
+              return formatValue(elem);
+            }).join(", ") + "]";
+          } 
+          // If it’s a non-null object, do a quick JSON.stringify
+          else if (typeof val === "object" && val !== null) {
+            return JSON.stringify(val, null, 2);
+          } 
+          // Otherwise, just coerce to string (numbers, strings, etc.)
+          else {
+            return String(val);
+          }
+        }
+
+        var console = {
+          log: function(...args) {
+            // Convert each argument to a bracketed/JSON-like string
+            var output = args.map(function(a) {
+              return formatValue(a);
+            }).join(" ");
+
+            // Call the Swift bridging function
+            _swiftConsoleLog(output);
+          }
+        };
+        """#
+        // Evaluate the above JS code in your context
+        context.evaluateScript(consolePolyfill)
         
         let result = context.evaluateScript(jsCode)
         

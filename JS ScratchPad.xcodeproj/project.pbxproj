@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		224B9A052D2066D1003A6FC9 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = 224B9A042D2066D1003A6FC9 /* Highlightr */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		224F48242CB3BF9000E27E18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				224B9A052D2066D1003A6FC9 /* Highlightr in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = "JS ScratchPad";
 			packageProductDependencies = (
+				224B9A042D2066D1003A6FC9 /* Highlightr */,
 			);
 			productName = "JS ScratchPad";
 			productReference = 224F48102CB3BF8F00E27E18 /* JS ScratchPad.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 224F48072CB3BF8F00E27E18;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				224B9A032D2066D1003A6FC9 /* XCRemoteSwiftPackageReference "Highlightr" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 224F48112CB3BF8F00E27E18 /* Products */;
 			projectDirPath = "";
@@ -591,6 +600,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		224B9A032D2066D1003A6FC9 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raspu/Highlightr.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		224B9A042D2066D1003A6FC9 /* Highlightr */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 224B9A032D2066D1003A6FC9 /* XCRemoteSwiftPackageReference "Highlightr" */;
+			productName = Highlightr;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 224F48082CB3BF8F00E27E18 /* Project object */;
 }
