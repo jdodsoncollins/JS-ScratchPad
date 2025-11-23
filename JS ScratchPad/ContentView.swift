@@ -17,9 +17,6 @@ struct ContentView: View {
                 NavigationView {
                     GeometryReader { geo in
                         VStack {
-                            Text("JavaScript Scratch Pad")
-                                .font(.largeTitle)
-                                .padding(.top, 10)
                             
                             PlainTextEditor(text: $document.text)
                                 .border(Color.gray, width: 1)
@@ -28,23 +25,26 @@ struct ContentView: View {
                                 .frame(minHeight: 200)
 
                             Spacer().frame(height: 20)
-
-                            Button("Run JavaScript") {
+                        }
+                        .padding(.top)
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                // The same logic as before
                                 outputText = executeJavaScript(document.text)
                                 withAnimation(.spring()) {
                                     bottomPanelOffset = 200
                                 }
+                            }) {
+                                // 2) Use a system play icon
+                                Image(systemName: "play.fill")
+                                    .foregroundColor(.blue)  // optional color
                             }
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 40)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            
-                            Spacer().frame(height: 20)
                         }
-                        .padding(.top)
                     }
+                    // 3) Give your NavView a title if desired
+                    .navigationBarTitleDisplayMode(.inline)
                 }
                 .zIndex(0)
                 
@@ -52,6 +52,10 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color(UIColor.systemBackground))
                         .shadow(radius: 8)
+                        .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.gray.opacity(0.6), lineWidth: 1)
+                                )
                     
                     OutputView(outputText: $outputText)
                 }
@@ -163,6 +167,7 @@ struct OutputView: View {
                 .padding()
             
             TextEditor(text: $outputText)
+                .font(.system(.body, design: .monospaced))
                 .border(Color.gray, width: 1)
                 .padding()
                 .frame(height: 300)
